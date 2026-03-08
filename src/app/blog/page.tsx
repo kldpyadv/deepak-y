@@ -1,7 +1,10 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import { client } from "@/sanity/client";
 import { urlFor } from "@/sanity/image";
 import Image from "next/image";
+
 
 const POSTS_QUERY = `*[
   _type == "post"
