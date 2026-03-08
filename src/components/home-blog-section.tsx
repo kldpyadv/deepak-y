@@ -16,9 +16,27 @@ const HOMEPAGE_POSTS_QUERY = `*[
 }`;
 
 export async function HomeBlogSection() {
-    const posts = await client.fetch(HOMEPAGE_POSTS_QUERY, {}, { next: { revalidate: 60 } });
+    let posts: any[] = [];
+    let fetchError: string | null = null;
+
+    try {
+        posts = await client.fetch(HOMEPAGE_POSTS_QUERY, {}, { next: { revalidate: 60 } });
+    } catch (e: unknown) {
+        fetchError = e instanceof Error ? e.message : String(e);
+    }
+
+    if (fetchError) {
+        return (
+            <section id="blog" className="py-24 px-4">
+                <p style={{ color: "red", fontFamily: "monospace" }}>
+                    Blog fetch error: {fetchError}
+                </p>
+            </section>
+        );
+    }
 
     if (posts.length === 0) return null;
+
 
     return (
         <section id="blog" className="py-24 px-4">
