@@ -16,7 +16,7 @@ const HOMEPAGE_POSTS_QUERY = `*[
 }`;
 
 export async function HomeBlogSection() {
-    const posts = await client.fetch(HOMEPAGE_POSTS_QUERY);
+    const posts = await client.fetch(HOMEPAGE_POSTS_QUERY, {}, { next: { revalidate: 60 } });
 
     if (posts.length === 0) return null;
 

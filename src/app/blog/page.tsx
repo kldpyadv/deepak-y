@@ -15,7 +15,7 @@ const POSTS_QUERY = `*[
 }`;
 
 export default async function BlogPage() {
-    const posts = await client.fetch(POSTS_QUERY);
+    const posts = await client.fetch(POSTS_QUERY, {}, { next: { revalidate: 60 } });
 
     return (
         <main className="min-h-screen py-24 px-4">
